@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Thymeleaf Demo</title>
+    <!--    @ refers to the root folder of static-->
+</head>
+
+<body>
+<form th:action="@{/process-student-form}" th:object="${student}" method="POST">
+
+    Student first name:
+    <input type="text" th:field="*{firstName}"/>
+<br><br>
+    Student last name:
+<input type="text" th:field="*{lastName}"/>
+<br><br>
+    Country:
+    <select th:field="*{country}">
+        <option th:each="tempCountry : ${countries}" th:value="${tempCountry}" th:text="${tempCountry}"/>
+<!--        <option th:value="Brazil">Brazil</option>-->
+<!--        <option th:value="Spain">Spain</option>-->
+<!--        <option th:value="Italy">Italy</option>-->
+<!--        <option th:value="Germany">Germany</option>-->
+    </select>
+    <br><br>
+    <input type="submit" value="Submit" />
+</form>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Thymeleaf Demo</title>
+    <!--    @ refers to the root folder of static-->
+</head>
+
+<body>
+
+<form th:action="@{/process-form-v2}" method="GET">
+<!--    WE can change the method to POST if we want!-->
+<input type="text" name="studentName" placeholder="Type in your name..." />
+<input type="submit"/>
+</form>
+
+</body>
+
+</html>
