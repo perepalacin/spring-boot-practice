@@ -54,4 +54,19 @@ public class BookDaoImplTest {
                 ArgumentMatchers.<BookDaoImpl.BookRowMapper>any()
         );
     }
+
+    @Test
+    public void testThatUpdateGeneratesCorrectSQL() {
+        Book book = TestDataUtils.createTestBook();
+        underTest.update("978-1-2345-6789-0", book);
+    }
+
+    @Test
+    public void testThatDeleteGeneratedCorrectSQL() {
+        underTest.delete("978-1-2345-6789-0");
+        verify(jdbcTemplate).update(
+                "DELETE FROM books WHERE isbn = ?",
+                "978-1-2345-6789-0"
+        );
+    }
 }

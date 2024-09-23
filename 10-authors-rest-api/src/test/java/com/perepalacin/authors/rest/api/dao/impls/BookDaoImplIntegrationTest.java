@@ -56,4 +56,15 @@ public class BookDaoImplIntegrationTest {
         assertThat(result).hasSize(3).containsExactlyInAnyOrder(bookA, bookB, bookC);
     }
 
+    @Test
+    public void testThatBookCanBeDeleted() {
+        Author author = TestDataUtils.createTestAuthor();
+        authorDao.create(author);
+        Book book = TestDataUtils.createTestBook();
+        underTest.create(book);
+        underTest.delete(book.getIsbn());
+        Optional<Book> result = underTest.findByIsbn(book.getIsbn());
+        assertThat(result).isEmpty();
+    }
+
 }
