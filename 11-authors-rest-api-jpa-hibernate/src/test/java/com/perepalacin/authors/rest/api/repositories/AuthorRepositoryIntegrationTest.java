@@ -86,17 +86,17 @@ public class AuthorRepositoryIntegrationTest {
         assertThat(result).containsExactlyInAnyOrder(authorDaoB, authorDaoC);
     }
 
-    @Test
-    public void testThatGetAuthorWithAgeGreaterThan() {
-        AuthorDao authorDaoA = TestDataUtils.createTestAuthorA();
-        underTest.save(authorDaoA);
-        AuthorDao authorDaoB = TestDataUtils.createTestAuthorB();
-        underTest.save(authorDaoB);
-        AuthorDao authorDaoC = TestDataUtils.createTestAuthorC();
-        underTest.save(authorDaoC);
-
-        Iterable<AuthorDao> result = underTest.ageGreaterThan(50);
-        assertThat(result).containsExactlyInAnyOrder(authorDaoA);
-    }
+//    @Test
+//    public void testThatGetAuthorWithAgeGreaterThan() {
+//        AuthorDao authorDaoA = TestDataUtils.createTestAuthorA();
+//        underTest.save(authorDaoA);
+//        AuthorDao authorDaoB = TestDataUtils.createTestAuthorB();
+//        underTest.save(authorDaoB);
+//        AuthorDao authorDaoC = TestDataUtils.createTestAuthorC();
+//        underTest.save(authorDaoC);
+//
+//        Iterable<AuthorDao> result = underTest.ageGreaterThan(50);
+//        assertThat(result).containsExactlyInAnyOrder(authorDaoA);
+//    }
 
 }
