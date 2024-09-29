@@ -1,14 +1,16 @@
 package com.perepalacin.shoppingcart.services.product;
 
 import com.perepalacin.shoppingcart.models.Product;
+import com.perepalacin.shoppingcart.requests.AddProductRequests;
+import com.perepalacin.shoppingcart.requests.UpdateProductRequest;
 
 import java.util.List;
 
 public interface IProductService {
-    Product addProduct(Product product);
+    Product addProduct(AddProductRequests product);
     Product getProductById(Long id);
     void deleteProductById(Long id);
-    void updateProduct(Product product, Long id);
+    Product updateProduct(UpdateProductRequest request, Long id);
     List<Product> getAllProducts();
     List<Product> getProductsByCategoryName(String category);
     List<Product> getProductsByBrandName(String brand);

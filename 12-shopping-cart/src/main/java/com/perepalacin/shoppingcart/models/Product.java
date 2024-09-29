@@ -1,17 +1,12 @@
 package com.perepalacin.shoppingcart.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
 @Entity
 public class Product {
@@ -30,4 +25,13 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true) //orphanRemoval == if an image has no product associated to it, delete it!
     private List<Image> images;
+
+    public Product(String name, String brand, String description, BigDecimal price, int inventory, Category category) {
+        this.name = name;
+        this.brand = brand;
+        this.description = description;
+        this.price = price;
+        this.inventory = inventory;
+        this.category = category;
+    }
 }
