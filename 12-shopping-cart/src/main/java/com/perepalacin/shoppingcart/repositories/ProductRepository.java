@@ -2,9 +2,11 @@ package com.perepalacin.shoppingcart.repositories;
 
 import com.perepalacin.shoppingcart.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     //WE add category name since category is an entity on its own (it has it's own table)
     List<Product> findByCategoryName(String category); //Product == entity, Long == id type of product.

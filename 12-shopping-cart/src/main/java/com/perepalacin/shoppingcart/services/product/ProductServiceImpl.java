@@ -1,25 +1,37 @@
 package com.perepalacin.shoppingcart.services.product;
 
+import com.perepalacin.shoppingcart.dto.ImageDto;
+import com.perepalacin.shoppingcart.dto.ProductDto;
 import com.perepalacin.shoppingcart.exceptions.ProductNotFoundException;
 import com.perepalacin.shoppingcart.models.Category;
+import com.perepalacin.shoppingcart.models.Image;
 import com.perepalacin.shoppingcart.models.Product;
 import com.perepalacin.shoppingcart.repositories.CategoryRepository;
+import com.perepalacin.shoppingcart.repositories.ImageRepository;
 import com.perepalacin.shoppingcart.repositories.ProductRepository;
 import com.perepalacin.shoppingcart.requests.AddProductRequests;
 import com.perepalacin.shoppingcart.requests.UpdateProductRequest;
-import lombok.RequiredArgsConstructor;
+import com.perepalacin.shoppingcart.services.image.ImageServiceImpl;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class ProductServiceImpl implements IProductService {
 
-    private ProductRepository productRepository;
-    private CategoryRepository categoryRepository;
+    private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
+    private final ImageRepository imageRepository;
+    private final ModelMapper modelMapper;
+
+    public ProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository, ModelMapper modelMapper, ImageRepository imageRepository) {
+        this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
+        this.imageRepository = imageRepository;
+        this.modelMapper = modelMapper;
+    }
 
     @Override
     public Product addProduct(AddProductRequests request) { //Add product request is just the DTO
@@ -33,8 +45,8 @@ public class ProductServiceImpl implements IProductService {
                     return categoryRepository.save(newCategory);
                 });
 
+        System.out.println(category);
         request.setCategory(category);
-
         return  productRepository.save(createProductHelperMethod(request, category));
     }
 
@@ -102,8 +114,7 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public List<Product> getProductsByCategoryAndBrandNames(String category, String brand) {
-
+    public List<Product> getProductsByCategoryAndBrandName(String category, String brand) {
         return productRepository.findByCategoryNameAndBrand(category, brand);
     }
 
@@ -125,5 +136,21 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public Long countProductsByBrandAndName(String brand, String name) {
         return productRepository.countByBrandAndName(brand, name);
+    }
+
+    @Override
+    public ProductDto convertToProductDto(Product product) {
+        ProductDto productDto = modelMapper.map(product, ProductDto.class);
+        List<Image> images = imageRepository.findByProductId(product.getId());
+        List<ImageDto> imageDtos = images.stream()
+                .map(image -> modelMapper.map(image, ImageDto.class))
+                .toList();
+        productDto.setImages(imageDtos);
+        return productDto;
+    }
+
+    @Override
+    public List<ProductDto> getConvertedProducts(List<Product> products) {
+        return products.stream().map(this::convertToProductDto).toList();
     }
 }

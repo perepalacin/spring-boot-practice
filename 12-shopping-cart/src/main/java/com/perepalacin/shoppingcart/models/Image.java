@@ -1,11 +1,13 @@
 package com.perepalacin.shoppingcart.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Blob;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -20,6 +22,7 @@ public class Image {
     private Blob image; //Blob == file content
     private String downloadUrl;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;

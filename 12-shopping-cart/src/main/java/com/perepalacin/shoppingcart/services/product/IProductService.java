@@ -1,5 +1,6 @@
 package com.perepalacin.shoppingcart.services.product;
 
+import com.perepalacin.shoppingcart.dto.ProductDto;
 import com.perepalacin.shoppingcart.models.Product;
 import com.perepalacin.shoppingcart.requests.AddProductRequests;
 import com.perepalacin.shoppingcart.requests.UpdateProductRequest;
@@ -14,9 +15,11 @@ public interface IProductService {
     List<Product> getAllProducts();
     List<Product> getProductsByCategoryName(String category);
     List<Product> getProductsByBrandName(String brand);
-    List<Product> getProductsByCategoryAndBrandNames(String category, String brand);
+    List<Product> getProductsByCategoryAndBrandName(String category, String brand);
     List<Product> getProductsByName(String name);
     List<Product> getProductsByBrandAndName(String brand, String name);
     Long countProductsByBrand(String brand);
     Long countProductsByBrandAndName(String brand, String name);
+    ProductDto convertToProductDto(Product product);
+    List<ProductDto> getConvertedProducts(List<Product> products);
 }
