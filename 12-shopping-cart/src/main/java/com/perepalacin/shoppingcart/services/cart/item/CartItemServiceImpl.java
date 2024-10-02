@@ -24,6 +24,7 @@ public class CartItemServiceImpl implements ICartItemService{
         this.cartService = cartService;
         this.cartRepository = cartRepository;
     }
+
     @Override
     public void addItemToCart(Long cartId, Long productId, int quantity) {
         Cart cart = cartService.getCart(cartId);
@@ -37,8 +38,9 @@ public class CartItemServiceImpl implements ICartItemService{
             cartItem.setProduct(product);
             cartItem.setQuantity(quantity);
             cartItem.setUnitPrice(product.getPrice());
-        } else {
-            cartItem.setQuantity(cartItem.getQuantity()+1);
+        }
+        else {
+            cartItem.setQuantity(cartItem.getQuantity() + quantity);
         }
         cartItem.setTotalPrice();
         cart.addItem(cartItem);

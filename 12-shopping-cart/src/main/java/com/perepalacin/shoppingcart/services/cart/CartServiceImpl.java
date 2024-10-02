@@ -6,14 +6,17 @@ import com.perepalacin.shoppingcart.models.CartItem;
 import com.perepalacin.shoppingcart.repositories.CartItemRepository;
 import com.perepalacin.shoppingcart.repositories.CartRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class CartServiceImpl implements ICartService{
 
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
+    private final AtomicLong cartIdGenerator = new AtomicLong(0);
 
     public CartServiceImpl(CartRepository cartRepository, CartItemRepository cartItemRepository) {
         this.cartRepository = cartRepository;
@@ -29,6 +32,15 @@ public class CartServiceImpl implements ICartService{
         return cartRepository.save(cart);
     }
 
+    @Override
+    public Long createNewCartAndReturnCartId() {
+        Cart newCart = new Cart();
+        Long newCartId = cartIdGenerator.incrementAndGet();
+        newCart.setId(newCartId);
+        return cartRepository.save(newCart).getId();
+    }
+
+    @Transactional
     @Override
     public void clearCart(Long id) {
         Cart cart = getCart(id);
