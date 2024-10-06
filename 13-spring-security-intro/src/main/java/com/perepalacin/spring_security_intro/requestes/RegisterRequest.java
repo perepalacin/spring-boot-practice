@@ -1,6 +1,5 @@
-package com.perepalacin.spring_security_intro.user;
+package com.perepalacin.spring_security_intro.requestes;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,15 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "_user")
-public class User {
-    @Id
-    @GeneratedValue //by default the strategy is auto
-    private Integer id;
+public class RegisterRequest {
     private String firstName;
     private String lastName;
     private String email;
     private String password;
 }
-
