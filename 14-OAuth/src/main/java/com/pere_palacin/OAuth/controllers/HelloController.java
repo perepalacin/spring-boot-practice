@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController {
 
     @GetMapping("")
-    public String greet(HttpServletRequest request) {
+    public String greet() {
         return "pong!";
     }
 

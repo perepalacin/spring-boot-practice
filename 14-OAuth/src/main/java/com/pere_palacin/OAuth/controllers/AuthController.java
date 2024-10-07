@@ -19,4 +19,9 @@ public class AuthController {
         return authService.register(user);
     }
 
+    @PostMapping("/sign-in")
+    public String login (RegisteredUser user) {
+        return authService.verify(user);
+    }
+
 }
